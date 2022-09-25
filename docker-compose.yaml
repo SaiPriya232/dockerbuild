@@ -2,7 +2,7 @@ services:
 
   app:
     depends_on:
-       - db
+       - dataBase
     build: .
     #image: tomcat:latest
     #container_name: tomcat
@@ -17,12 +17,12 @@ services:
     #  - SPRING_DATASOURCE_PASSWORD=kparun
     #volumes:
     #  - ./target/ashwin-web.war:/usr/local/tomcat/webapps/ashwin-web.war
-  db:
+  dataBase:
     # We use a mariadb image which supports both amd64 & arm64 architecture
     # If you really want to use MySQL, uncomment the following line
     image: mysql:8.0.27
     #command: '--default-authentication-plugin=mysql_native_password'
-    container_name: db
+    container_name: dataBase
     volumes:
       - db_data:/var/lib/mysql
     restart: always
