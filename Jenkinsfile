@@ -5,7 +5,7 @@ pipeline {
         stages {
             stage('Source') {
                 steps {
-                    git url: 'https://github.com/Anandasb149/SpringMysqlDemo.git'
+                    git url: 'https://github.com/SushmithaNayak23/SpringBuildDockerImage.git'
                 }
             }
             
