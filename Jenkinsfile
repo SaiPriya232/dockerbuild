@@ -5,7 +5,7 @@ pipeline {
         stages {
             stage('Source') {
                 steps {
-                    git url: 'https://github.com/SushmithaNayak23/SpringBuildDockerImage.git'
+                    git url: 'https://github.com/SaiPriya232/dockerbuild.git'
                 }
             }
             
@@ -29,7 +29,7 @@ pipeline {
             stage('Build') {
                 steps {
                     script {
-                        def mvnHome = tool 'Maven_Home'
+                        def mvnHome = tool 'M3'
                         bat "${mvnHome}\\bin\\mvn -B verify"
                     }
                 }
@@ -37,9 +37,9 @@ pipeline {
             stage('SonarQube Analysis') {
                 steps {
                     script {
-                        def mvnHome = tool 'Maven_Home'
+                        def mvnHome = tool 'M3'
                         withSonarQubeEnv() {
-                            bat "${mvnHome}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=SpringMysql"
+                            bat "${mvnHome}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=dockerbuild"
                         }
                     }
                 }
@@ -57,8 +57,8 @@ pipeline {
                             def server = Artifactory.server 'JFROG'
                             def rtMaven = Artifactory.newMavenBuild()
                             //rtMaven.resolver server: server, releaseRepo: 'jenkins-devops', snapshotRepo: 'jenkins-devops-snapshot'
-                            rtMaven.deployer server: server, releaseRepo: 'SpringDemo', snapshotRepo: 'SpringDemoSnp'
-                            rtMaven.tool = 'Maven_Home'
+                            rtMaven.deployer server: server, releaseRepo: 'dockerbuild-1', snapshotRepo: 'dockerbuild-2'
+                            rtMaven.tool = 'M3'
                             
                             def buildInfo = rtMaven.run pom: '$workspace/pom.xml', goals: 'clean install'
                             rtMaven.deployer.deployArtifacts = true
